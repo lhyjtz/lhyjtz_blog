@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lcyjtz.mapper.VisitorMapper">
+    <resultMap id="BaseResultMap" type="com.lcyjtz.entity.Visitor">
+        <id column="VisitorID" property="visitorid" jdbcType="INTEGER"/>
+        <result column="VisitorName" property="visitorname" jdbcType="VARCHAR"/>
+        <result column="Visitorpwd" property="visitorpwd" jdbcType="VARCHAR"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="VisitorRoleID" property="visitorroleid" jdbcType="INTEGER"/>
+        <result column="Email" property="email" jdbcType="VARCHAR"/>
+        <result column="VisitorState" property="visitorstate" jdbcType="INTEGER"/>
+        <result column="VisitorResume" property="visitorresume" jdbcType="VARCHAR"/>
+        <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP"/>
+        <result column="UpdateTime" property="updatetime" jdbcType="TIMESTAMP"/>
+        <result column="IsSilence" property="issilence" jdbcType="BIT"/>
+        <result column="LoginDelete" property="logindelete" jdbcType="BIT"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    VisitorID, VisitorName, Visitorpwd, avatar, VisitorRoleID, Email, VisitorState, VisitorResume, 
+    CreateTime, UpdateTime, IsSilence, LoginDelete
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lcyjtz.entity.VisitorExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from visitor
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from visitor
+        where VisitorID = #{visitorid,jdbcType=INTEGER}
+    </select>
+    <select id="GetUserRolesByUserID" resultType="java.lang.String">
+        select powertype
+        from power , rolepower
+        where power.powerid=#{VisitorID} and rolepower.RoleID=#{VisitorID}
+    </select>
+
+    <select id="selectByUserName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from visitor
+        where VisitorName = #{visitorname,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getUserByCondition" resultType="com.lcyjtz.dto.UserDTO">
+        SELECT a.avatar, a.VisitorName, a.CreateTime, a.UpdateTime, a.Email, a.IsSilence, b.powertype
+        FROM visitor a, power b, rolepower c
+        WHERE a.VisitorRoleID=c.RoleID AND b.powerid= c.powerID
+        <if test="userQueryVO.roleName!=null and userQueryVO.roleName!=''">
+            and b.powertype=#{userQueryVO.roleName}
+        </if>
+        <if test="userQueryVO.nickname!=null and userQueryVO.nickname!=''">
+            and a.VisitorName LIKE concat(concat('%',#{userQueryVO.nickname},'%'))
+        </if>
+        LIMIT #{userQueryVO.current},#{userQueryVO.size}
+    </select>
+    <select id="getRoleList" resultType="com.lcyjtz.dto.RoleListDTO">
+       select a.powertype, count(a.powertype) FROM power a GROUP BY a.powerid
+   </select>
+    <select id="getcount" resultType="java.lang.Integer">
+      SELECT COUNT(*) FROM visitor
+   </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from visitor
+    where VisitorID = #{visitorid,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.lcyjtz.entity.VisitorExample">
+        delete from visitor
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.lcyjtz.entity.Visitor">
+    insert into visitor (VisitorID, VisitorName, Visitorpwd, 
+      avatar, VisitorRoleID, Email, 
+      VisitorState, VisitorResume, CreateTime, 
+      UpdateTime, IsSilence, LoginDelete
+      )
+    values (#{visitorid,jdbcType=INTEGER}, #{visitorname,jdbcType=VARCHAR}, #{visitorpwd,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR}, #{visitorroleid,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
+      #{visitorstate,jdbcType=INTEGER}, #{visitorresume,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{updatetime,jdbcType=TIMESTAMP}, #{issilence,jdbcType=BIT}, #{logindelete,jdbcType=BIT}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.lcyjtz.entity.Visitor">
+        insert into visitor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="visitorid != null">
+                VisitorID,
+            </if>
+            <if test="visitorname != null">
+                VisitorName,
+            </if>
+            <if test="visitorpwd != null">
+                Visitorpwd,
+            </if>
+            <if test="avatar != null">
+                avatar,
+            </if>
+            <if test="visitorroleid != null">
+                VisitorRoleID,
+            </if>
+            <if test="email != null">
+                Email,
+            </if>
+            <if test="visitorstate != null">
+                VisitorState,
+            </if>
+            <if test="visitorresume != null">
+                VisitorResume,
+            </if>
+            <if test="createtime != null">
+                CreateTime,
+            </if>
+            <if test="updatetime != null">
+                UpdateTime,
+            </if>
+            <if test="issilence != null">
+                IsSilence,
+            </if>
+            <if test="logindelete != null">
+                LoginDelete,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="visitorid != null">
+                #{visitorid,jdbcType=INTEGER},
+            </if>
+            <if test="visitorname != null">
+                #{visitorname,jdbcType=VARCHAR},
+            </if>
+            <if test="visitorpwd != null">
+                #{visitorpwd,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="visitorroleid != null">
+                #{visitorroleid,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="visitorstate != null">
+                #{visitorstate,jdbcType=INTEGER},
+            </if>
+            <if test="visitorresume != null">
+                #{visitorresume,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="issilence != null">
+                #{issilence,jdbcType=BIT},
+            </if>
+            <if test="logindelete != null">
+                #{logindelete,jdbcType=BIT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.lcyjtz.entity.VisitorExample" resultType="java.lang.Integer">
+        select count(*) from visitor
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update visitor
+        <set>
+            <if test="record.visitorid != null">
+                VisitorID = #{record.visitorid,jdbcType=INTEGER},
+            </if>
+            <if test="record.visitorname != null">
+                VisitorName = #{record.visitorname,jdbcType=VARCHAR},
+            </if>
+            <if test="record.visitorpwd != null">
+                Visitorpwd = #{record.visitorpwd,jdbcType=VARCHAR},
+            </if>
+            <if test="record.avatar != null">
+                avatar = #{record.avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="record.visitorroleid != null">
+                VisitorRoleID = #{record.visitorroleid,jdbcType=INTEGER},
+            </if>
+            <if test="record.email != null">
+                Email = #{record.email,jdbcType=VARCHAR},
+            </if>
+            <if test="record.visitorstate != null">
+                VisitorState = #{record.visitorstate,jdbcType=INTEGER},
+            </if>
+            <if test="record.visitorresume != null">
+                VisitorResume = #{record.visitorresume,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createtime != null">
+                CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updatetime != null">
+                UpdateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.issilence != null">
+                IsSilence = #{record.issilence,jdbcType=BIT},
+            </if>
+            <if test="record.logindelete != null">
+                LoginDelete = #{record.logindelete,jdbcType=BIT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update visitor
+        set VisitorID = #{record.visitorid,jdbcType=INTEGER},
+        VisitorName = #{record.visitorname,jdbcType=VARCHAR},
+        Visitorpwd = #{record.visitorpwd,jdbcType=VARCHAR},
+        avatar = #{record.avatar,jdbcType=VARCHAR},
+        VisitorRoleID = #{record.visitorroleid,jdbcType=INTEGER},
+        Email = #{record.email,jdbcType=VARCHAR},
+        VisitorState = #{record.visitorstate,jdbcType=INTEGER},
+        VisitorResume = #{record.visitorresume,jdbcType=VARCHAR},
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+        UpdateTime = #{record.updatetime,jdbcType=TIMESTAMP},
+        IsSilence = #{record.issilence,jdbcType=BIT},
+        LoginDelete = #{record.logindelete,jdbcType=BIT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.lcyjtz.entity.Visitor">
+        update visitor
+        <set>
+            <if test="visitorname != null">
+                VisitorName = #{visitorname,jdbcType=VARCHAR},
+            </if>
+            <if test="visitorpwd != null">
+                Visitorpwd = #{visitorpwd,jdbcType=VARCHAR},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar,jdbcType=VARCHAR},
+            </if>
+            <if test="visitorroleid != null">
+                VisitorRoleID = #{visitorroleid,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                Email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="visitorstate != null">
+                VisitorState = #{visitorstate,jdbcType=INTEGER},
+            </if>
+            <if test="visitorresume != null">
+                VisitorResume = #{visitorresume,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                CreateTime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatetime != null">
+                UpdateTime = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="issilence != null">
+                IsSilence = #{issilence,jdbcType=BIT},
+            </if>
+            <if test="logindelete != null">
+                LoginDelete = #{logindelete,jdbcType=BIT},
+            </if>
+        </set>
+        where VisitorID = #{visitorid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.lcyjtz.entity.Visitor">
+    update visitor
+    set VisitorName = #{visitorname,jdbcType=VARCHAR},
+      Visitorpwd = #{visitorpwd,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      VisitorRoleID = #{visitorroleid,jdbcType=INTEGER},
+      Email = #{email,jdbcType=VARCHAR},
+      VisitorState = #{visitorstate,jdbcType=INTEGER},
+      VisitorResume = #{visitorresume,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      UpdateTime = #{updatetime,jdbcType=TIMESTAMP},
+      IsSilence = #{issilence,jdbcType=BIT},
+      LoginDelete = #{logindelete,jdbcType=BIT}
+    where VisitorID = #{visitorid,jdbcType=INTEGER}
+  </update>
+</mapper>

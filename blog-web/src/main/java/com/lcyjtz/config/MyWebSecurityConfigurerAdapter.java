@@ -4,6 +4,7 @@ import com.lcyjtz.auth.MyUserDetailsService;
 import com.lcyjtz.auth.MyUsernamePasswordAuthenticationFilter;
 import com.lcyjtz.authority.MyAccessDecisionManager;
 import com.lcyjtz.authority.MyFilterInvocationSecurityMetadataSource;
+import com.lcyjtz.handler.auth.MyAccessDeniedHandler;
 import com.lcyjtz.handler.auth.MyAuthenticationFailureHandler;
 import com.lcyjtz.handler.auth.MyAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,17 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
     private MyAuthenticationFailureHandler myAuthenticationFailureHandler;
     private MyAccessDecisionManager myAccessDecisionManager;
     private MyFilterInvocationSecurityMetadataSource myFilterInvocationSecurityMetadataSource;
+    private MyAccessDeniedHandler myAccessDeniedHandler;
 
     @Autowired
-    public void setMyUserDetailsService(MyFilterInvocationSecurityMetadataSource myFilterInvocationSecurityMetadataSource, MyAccessDecisionManager myAccessDecisionManager, MyUserDetailsService myUserDetailsService, MyAuthenticationSuccessHandler myAuthenticationSuccessHandler, MyAuthenticationFailureHandler myAuthenticationFailureHandler) {
+    public void setMyUserDetailsService(MyAccessDeniedHandler myAccessDeniedHandler, MyFilterInvocationSecurityMetadataSource myFilterInvocationSecurityMetadataSource, MyAccessDecisionManager myAccessDecisionManager, MyUserDetailsService myUserDetailsService, MyAuthenticationSuccessHandler myAuthenticationSuccessHandler, MyAuthenticationFailureHandler myAuthenticationFailureHandler) {
         this.myUserDetailsService = myUserDetailsService;
         this.myAuthenticationSuccessHandler = myAuthenticationSuccessHandler;
         this.myAuthenticationFailureHandler = myAuthenticationFailureHandler;
         this.myAccessDecisionManager = myAccessDecisionManager;
         this.myFilterInvocationSecurityMetadataSource = myFilterInvocationSecurityMetadataSource;
+        this.myAccessDeniedHandler = myAccessDeniedHandler;
+
     }
 
     @Override
@@ -52,6 +56,7 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
             }
         });
         http.authorizeRequests().anyRequest().authenticated();
+        http.exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
     }
 
     @Bean

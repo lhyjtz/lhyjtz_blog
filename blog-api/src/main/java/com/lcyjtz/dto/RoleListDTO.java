@@ -12,6 +12,7 @@ public class RoleListDTO implements Serializable {
 
     public String getRoleName() {
         return roleName;
+
     }
 
     public void setRoleName(String roleName) {

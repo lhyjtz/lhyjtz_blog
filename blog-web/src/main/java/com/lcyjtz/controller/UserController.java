@@ -25,13 +25,10 @@ public class UserController {
 
     @GetMapping("/getUserList")
     public Result getUserList(UserQueryVO userQueryVO) {
-        System.out.println(userQueryVO);
         List<UserDTO> userDTOList = webService.getUserByCondition(userQueryVO);
         int count= webService.count();
-        System.out.println(count);
         if (userDTOList != null) {
-            int total = userDTOList.size();
-            return Result.success().data("userList", userDTOList).data("total",count);
+            return Result.success().codeAndMessage(ResultInfo.SUCCESS).data("userList", userDTOList).data("total",count);
         }
         return Result.error().codeAndMessage(ResultInfo.GLOBAL_ERROR);
     }

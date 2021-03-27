@@ -26,7 +26,6 @@ public class RoleController {
     @GetMapping("/getRoleList")
     public Result getRoleList() {
         List<RoleListDTO> roleListDTOList = webService.getRoleList();
-        System.out.println(webService.getRoleList());
         if (roleListDTOList.size() > 0) {
             return Result.success().codeAndMessage(ResultInfo.SUCCESS).data("roleList", roleListDTOList);
         }

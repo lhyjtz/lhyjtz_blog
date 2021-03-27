@@ -69,7 +69,6 @@ public class WEBServiceImpl implements WEBService {
     @Override
     public List<RoleListDTO> getRoleList() {
         List<RoleListDTO> roleListDTOList = powerMapper.getRoleList();
-        System.out.println(roleListDTOList);
         return roleListDTOList;
     }
 

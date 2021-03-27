@@ -44,9 +44,6 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
                     objectMapper.writeValueAsString(Result.success()
                             .codeAndMessage(ResultInfo.LOGIN_SUCCESS)
                             .data("user", visitor).data("roles", roles)));
-            System.out.println(objectMapper.writeValueAsString(Result.success()
-                    .codeAndMessage(ResultInfo.LOGIN_SUCCESS)
-                    .data("user", visitor).data("roles", roles)));
         }
 //        System.out.println("成功");
 //        response.getWriter().write(

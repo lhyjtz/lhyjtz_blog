@@ -1,9 +1,10 @@
 package com.lcyjtz;
 
 public enum ResultInfo {
-    LOGIN_SUCCESS("200","登录成功"),
-    LOGIN_ERROR("401","登录失败"),
-    GLOBAL_ERROR("101","系统繁忙"),
+    ACCESS_DENY("403", "权限不足"),
+    LOGIN_SUCCESS("200", "登录成功"),
+    LOGIN_ERROR("401", "登录失败"),
+    GLOBAL_ERROR("101", "系统繁忙"),
     NOT_FOUND("404", "没有找到"),
     SUCCESS("200", "操作成功");
     private String code;

@@ -40,10 +40,15 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
                 roles.add(role.getAuthority());
             }
             httpServletResponse.setContentType("application/json;charset=UTF-8");
-            httpServletResponse.getWriter().write(
-                    objectMapper.writeValueAsString(Result.success()
-                            .codeAndMessage(ResultInfo.LOGIN_SUCCESS)
-                            .data("user", visitor).data("roles", roles)));
+            if (roles.get(0).equals("user") == false) {
+                httpServletResponse.getWriter().write(
+                        objectMapper.writeValueAsString(Result.success()
+                                .codeAndMessage(ResultInfo.LOGIN_SUCCESS)
+                                .data("user", visitor).data("roles", roles)));
+            } else {
+                httpServletResponse.getWriter().write(objectMapper.writeValueAsString(Result.error()
+                        .codeAndMessage(ResultInfo.LOGIN_ERROR)));
+            }
         }
 //        System.out.println("成功");
 //        response.getWriter().write(

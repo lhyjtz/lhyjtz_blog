@@ -8,6 +8,8 @@ import java.util.Date;
 
 public class UserDTO {
 
+    private Integer visitorid;
+
     private String visitorname;
 
     private String email;

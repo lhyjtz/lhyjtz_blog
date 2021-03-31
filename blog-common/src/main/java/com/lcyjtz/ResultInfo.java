@@ -6,6 +6,8 @@ public enum ResultInfo {
     LOGIN_ERROR("401", "登录失败,请检查密码账号是否正确以及向管理员确认是否满足权限"),
     GLOBAL_ERROR("101", "系统繁忙"),
     NOT_FOUND("404", "没有找到"),
+    SUCCESSFULLY_DELETE("200","删除成功"),
+    DELETE_FAILED("400","删除失败"),
     SUCCESS("200", "操作成功");
     private String code;
     private String message;

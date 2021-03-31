@@ -78,6 +78,11 @@ public class WEBServiceImpl implements WEBService {
     }
 
     @Override
+    public int DeleteUser(Integer id) {
+        return visitorMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
     public List<Menu> getAllMenuListByUserRole(String roleName) {
         List<Menu> menuList = menuMapper.getAllMenuList(roleName);
         List<Menu> menuListDTO = new ArrayList<>();

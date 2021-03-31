@@ -123,7 +123,7 @@
         <if test="userQueryVO.nickname!=null and userQueryVO.nickname!=''">
             and a.VisitorName LIKE concat(concat('%',#{userQueryVO.nickname},'%'))
         </if>
-        LIMIT #{userQueryVO.current},#{userQueryVO.size}
+        order by a.visitorid asc LIMIT #{userQueryVO.current},#{userQueryVO.size}
     </select>
     <select id="getRoleList" resultType="com.lcyjtz.dto.RoleListDTO">
        select a.powertype, count(a.powertype) FROM power a GROUP BY a.powerid

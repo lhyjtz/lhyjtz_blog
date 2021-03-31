@@ -83,6 +83,11 @@ public class WEBServiceImpl implements WEBService {
     }
 
     @Override
+    public int insert(Visitor visitor) {
+        return visitorMapper.insert(visitor);
+    }
+
+    @Override
     public List<Menu> getAllMenuListByUserRole(String roleName) {
         List<Menu> menuList = menuMapper.getAllMenuList(roleName);
         List<Menu> menuListDTO = new ArrayList<>();

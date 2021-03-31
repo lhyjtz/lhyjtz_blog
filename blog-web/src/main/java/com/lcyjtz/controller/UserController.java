@@ -4,13 +4,16 @@ import com.lcyjtz.Result;
 import com.lcyjtz.ResultInfo;
 import com.lcyjtz.api.WEBService;
 import com.lcyjtz.dto.UserDTO;
+import com.lcyjtz.entity.Visitor;
 import com.lcyjtz.vo.UserQueryVO;
+import com.mysql.cj.xdevapi.JsonArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -41,5 +44,18 @@ public class UserController {
             return Result.success().codeAndMessage(ResultInfo.SUCCESSFULLY_DELETE);
         }
         return Result.error().codeAndMessage(ResultInfo.DELETE_FAILED);
+    }
+
+    @PostMapping("/addUser")
+    public Result addUser(Visitor visitor) throws ParseException {
+//        SimpleDateFormat sdf = new SimpleDateFormat();
+//        sdf.applyPattern("yyyy-MM-dd HH:mm:ss a");
+//        Date date = new Date();
+//        visitor.setCreatetime(sdf.format(date));
+//        System.out.println(visitor);
+        if (webService.insert(visitor) > 0) {
+            return Result.success().codeAndMessage(ResultInfo.SUCCESS);
+        }
+        return Result.error().codeAndMessage(ResultInfo.GLOBAL_ERROR);
     }
 }

@@ -114,7 +114,7 @@
     </select>
 
     <select id="getUserByCondition" resultType="com.lcyjtz.dto.UserDTO">
-        SELECT a.avatar, a.VisitorName, a.CreateTime, a.UpdateTime, a.Email, a.IsSilence, b.powertype
+        SELECT a.visitorid, a.avatar, a.VisitorName, a.CreateTime, a.UpdateTime, a.Email, a.IsSilence, b.powertype
         FROM visitor a, power b, rolepower c
         WHERE a.VisitorRoleID=c.RoleID AND b.powerid= c.powerID
         <if test="userQueryVO.roleName!=null and userQueryVO.roleName!=''">

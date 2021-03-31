@@ -27,4 +27,7 @@ public interface WEBService {
 
     //删除用户
     int DeleteUser(Integer id);
+
+    //添加用户
+    int insert(Visitor visitor);
 }

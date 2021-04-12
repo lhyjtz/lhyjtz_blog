@@ -2,9 +2,13 @@ package com.lcyjtz.mapper;
 
 import com.lcyjtz.entity.ArticleType;
 import com.lcyjtz.entity.ArticleTypeExample;
+
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface ArticleTypeMapper {
     int countByExample(ArticleTypeExample example);
 

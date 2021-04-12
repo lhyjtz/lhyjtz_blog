@@ -2,9 +2,13 @@ package com.lcyjtz.mapper;
 
 import com.lcyjtz.entity.ArticleCategcry;
 import com.lcyjtz.entity.ArticleCategcryExample;
+
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface ArticleCategcryMapper {
     int countByExample(ArticleCategcryExample example);
 

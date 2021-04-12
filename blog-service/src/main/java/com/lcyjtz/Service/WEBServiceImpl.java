@@ -4,12 +4,8 @@ import com.lcyjtz.api.WEBService;
 
 import com.lcyjtz.dto.RoleListDTO;
 import com.lcyjtz.dto.UserDTO;
-import com.lcyjtz.entity.Menu;
-import com.lcyjtz.entity.Power;
-import com.lcyjtz.entity.Visitor;
-import com.lcyjtz.mapper.MenuMapper;
-import com.lcyjtz.mapper.PowerMapper;
-import com.lcyjtz.mapper.VisitorMapper;
+import com.lcyjtz.entity.*;
+import com.lcyjtz.mapper.*;
 import com.lcyjtz.vo.UserQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +20,13 @@ public class WEBServiceImpl implements WEBService {
     private VisitorMapper visitorMapper;
     private MenuMapper menuMapper;
     private PowerMapper powerMapper;
+    private ArticleCategcryMapper articleCategcryMapper;
+    private ArticleTypeMapper articleTypeMapper;
+
+    @Autowired(required = false)
+    public void setMapper(ArticleTypeMapper articleTypeMapper) {
+        this.articleTypeMapper = articleTypeMapper;
+    }
 
     @Autowired(required = false)
     public void setMapper(VisitorMapper visitorMapper) {
@@ -38,6 +41,11 @@ public class WEBServiceImpl implements WEBService {
     @Autowired(required = false)
     public void setPowerMapper(PowerMapper powerMapper) {
         this.powerMapper = powerMapper;
+    }
+
+    @Autowired(required = false)
+    public void setArticleCategcryMapper(ArticleCategcryMapper articleCategcryMapper) {
+        this.articleCategcryMapper = articleCategcryMapper;
     }
 
     @Override
@@ -85,6 +93,16 @@ public class WEBServiceImpl implements WEBService {
     @Override
     public int insert(Visitor visitor) {
         return visitorMapper.insert(visitor);
+    }
+
+    @Override
+    public List<ArticleCategcry> list() {
+        return articleCategcryMapper.selectByExample(null);
+    }
+
+    @Override
+    public List<ArticleType> TypeList() {
+        return articleTypeMapper.selectByExample(null);
     }
 
     @Override

@@ -2,6 +2,8 @@ package com.lcyjtz.api;
 
 import com.lcyjtz.dto.RoleListDTO;
 import com.lcyjtz.dto.UserDTO;
+import com.lcyjtz.entity.ArticleCategcry;
+import com.lcyjtz.entity.ArticleType;
 import com.lcyjtz.entity.Menu;
 import com.lcyjtz.entity.Visitor;
 import com.lcyjtz.vo.UserQueryVO;
@@ -30,4 +32,9 @@ public interface WEBService {
 
     //添加用户
     int insert(Visitor visitor);
+
+    //获取分类列表
+    List<ArticleCategcry> list();
+    //获取标签列表
+    List<ArticleType> TypeList();
 }

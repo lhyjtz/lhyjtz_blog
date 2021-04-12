@@ -2,15 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lcyjtz.mapper.ArticleMapper" >
   <resultMap id="BaseResultMap" type="com.lcyjtz.entity.Article" >
-    <id column="Article_ID" property="articleId" jdbcType="INTEGER" />
-    <result column="Article_FileName" property="articleFilename" jdbcType="VARCHAR" />
-    <result column="Article_Path" property="articlePath" jdbcType="VARCHAR" />
-    <result column="Article_Data" property="articleData" jdbcType="VARCHAR" />
-    <result column="Article_Title" property="articleTitle" jdbcType="VARCHAR" />
-    <result column="Article_Introduce" property="articleIntroduce" jdbcType="VARCHAR" />
-    <result column="Article_Type" property="articleType" jdbcType="VARCHAR" />
-    <result column="Article_Picture_ID" property="articlePictureId" jdbcType="VARCHAR" />
-    <result column="Article_Resource_id" property="articleResourceId" jdbcType="INTEGER" />
+    <id column="ArticleID" property="articleid" jdbcType="INTEGER" />
+    <result column="ArticleFileName" property="articlefilename" jdbcType="VARCHAR" />
+    <result column="ArticleData" property="articledata" jdbcType="VARCHAR" />
+    <result column="ArticleTitle" property="articletitle" jdbcType="VARCHAR" />
+    <result column="ArticleCategcry" property="articlecategcry" jdbcType="INTEGER" />
+    <result column="ArticleTypeID" property="articletypeid" jdbcType="INTEGER" />
+    <result column="ArticleResourceID" property="articleresourceid" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.lcyjtz.entity.Article" extends="BaseResultMap" >
+    <result column="ArticleContent" property="articlecontent" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,9 +72,29 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    Article_ID, Article_FileName, Article_Path, Article_Data, Article_Title, Article_Introduce, 
-    Article_Type, Article_Picture_ID, Article_Resource_id
+    ArticleID, ArticleFileName, ArticleData, ArticleTitle, ArticleCategcry, ArticleTypeID, 
+    ArticleResourceID
   </sql>
+  <sql id="Blob_Column_List" >
+    ArticleContent
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.lcyjtz.entity.ArticleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from article
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lcyjtz.entity.ArticleExample" >
     select
     <if test="distinct" >
@@ -89,15 +110,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from article
-    where Article_ID = #{articleId,jdbcType=INTEGER}
+    where ArticleID = #{articleid,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from article
-    where Article_ID = #{articleId,jdbcType=INTEGER}
+    where ArticleID = #{articleid,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.lcyjtz.entity.ArticleExample" >
     delete from article
@@ -106,73 +129,65 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.lcyjtz.entity.Article" >
-    insert into article (Article_ID, Article_FileName, Article_Path, 
-      Article_Data, Article_Title, Article_Introduce, 
-      Article_Type, Article_Picture_ID, Article_Resource_id
-      )
-    values (#{articleId,jdbcType=INTEGER}, #{articleFilename,jdbcType=VARCHAR}, #{articlePath,jdbcType=VARCHAR}, 
-      #{articleData,jdbcType=VARCHAR}, #{articleTitle,jdbcType=VARCHAR}, #{articleIntroduce,jdbcType=VARCHAR}, 
-      #{articleType,jdbcType=VARCHAR}, #{articlePictureId,jdbcType=VARCHAR}, #{articleResourceId,jdbcType=INTEGER}
-      )
+    insert into article (ArticleID, ArticleFileName, ArticleData, 
+      ArticleTitle, ArticleCategcry, ArticleTypeID, 
+      ArticleResourceID, ArticleContent)
+    values (#{articleid,jdbcType=INTEGER}, #{articlefilename,jdbcType=VARCHAR}, #{articledata,jdbcType=VARCHAR}, 
+      #{articletitle,jdbcType=VARCHAR}, #{articlecategcry,jdbcType=INTEGER}, #{articletypeid,jdbcType=INTEGER}, 
+      #{articleresourceid,jdbcType=INTEGER}, #{articlecontent,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.lcyjtz.entity.Article" >
     insert into article
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="articleId != null" >
-        Article_ID,
+      <if test="articleid != null" >
+        ArticleID,
       </if>
-      <if test="articleFilename != null" >
-        Article_FileName,
+      <if test="articlefilename != null" >
+        ArticleFileName,
       </if>
-      <if test="articlePath != null" >
-        Article_Path,
+      <if test="articledata != null" >
+        ArticleData,
       </if>
-      <if test="articleData != null" >
-        Article_Data,
+      <if test="articletitle != null" >
+        ArticleTitle,
       </if>
-      <if test="articleTitle != null" >
-        Article_Title,
+      <if test="articlecategcry != null" >
+        ArticleCategcry,
       </if>
-      <if test="articleIntroduce != null" >
-        Article_Introduce,
+      <if test="articletypeid != null" >
+        ArticleTypeID,
       </if>
-      <if test="articleType != null" >
-        Article_Type,
+      <if test="articleresourceid != null" >
+        ArticleResourceID,
       </if>
-      <if test="articlePictureId != null" >
-        Article_Picture_ID,
-      </if>
-      <if test="articleResourceId != null" >
-        Article_Resource_id,
+      <if test="articlecontent != null" >
+        ArticleContent,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="articleId != null" >
-        #{articleId,jdbcType=INTEGER},
+      <if test="articleid != null" >
+        #{articleid,jdbcType=INTEGER},
       </if>
-      <if test="articleFilename != null" >
-        #{articleFilename,jdbcType=VARCHAR},
+      <if test="articlefilename != null" >
+        #{articlefilename,jdbcType=VARCHAR},
       </if>
-      <if test="articlePath != null" >
-        #{articlePath,jdbcType=VARCHAR},
+      <if test="articledata != null" >
+        #{articledata,jdbcType=VARCHAR},
       </if>
-      <if test="articleData != null" >
-        #{articleData,jdbcType=VARCHAR},
+      <if test="articletitle != null" >
+        #{articletitle,jdbcType=VARCHAR},
       </if>
-      <if test="articleTitle != null" >
-        #{articleTitle,jdbcType=VARCHAR},
+      <if test="articlecategcry != null" >
+        #{articlecategcry,jdbcType=INTEGER},
       </if>
-      <if test="articleIntroduce != null" >
-        #{articleIntroduce,jdbcType=VARCHAR},
+      <if test="articletypeid != null" >
+        #{articletypeid,jdbcType=INTEGER},
       </if>
-      <if test="articleType != null" >
-        #{articleType,jdbcType=VARCHAR},
+      <if test="articleresourceid != null" >
+        #{articleresourceid,jdbcType=INTEGER},
       </if>
-      <if test="articlePictureId != null" >
-        #{articlePictureId,jdbcType=VARCHAR},
-      </if>
-      <if test="articleResourceId != null" >
-        #{articleResourceId,jdbcType=INTEGER},
+      <if test="articlecontent != null" >
+        #{articlecontent,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -185,49 +200,58 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update article
     <set >
-      <if test="record.articleId != null" >
-        Article_ID = #{record.articleId,jdbcType=INTEGER},
+      <if test="record.articleid != null" >
+        ArticleID = #{record.articleid,jdbcType=INTEGER},
       </if>
-      <if test="record.articleFilename != null" >
-        Article_FileName = #{record.articleFilename,jdbcType=VARCHAR},
+      <if test="record.articlefilename != null" >
+        ArticleFileName = #{record.articlefilename,jdbcType=VARCHAR},
       </if>
-      <if test="record.articlePath != null" >
-        Article_Path = #{record.articlePath,jdbcType=VARCHAR},
+      <if test="record.articledata != null" >
+        ArticleData = #{record.articledata,jdbcType=VARCHAR},
       </if>
-      <if test="record.articleData != null" >
-        Article_Data = #{record.articleData,jdbcType=VARCHAR},
+      <if test="record.articletitle != null" >
+        ArticleTitle = #{record.articletitle,jdbcType=VARCHAR},
       </if>
-      <if test="record.articleTitle != null" >
-        Article_Title = #{record.articleTitle,jdbcType=VARCHAR},
+      <if test="record.articlecategcry != null" >
+        ArticleCategcry = #{record.articlecategcry,jdbcType=INTEGER},
       </if>
-      <if test="record.articleIntroduce != null" >
-        Article_Introduce = #{record.articleIntroduce,jdbcType=VARCHAR},
+      <if test="record.articletypeid != null" >
+        ArticleTypeID = #{record.articletypeid,jdbcType=INTEGER},
       </if>
-      <if test="record.articleType != null" >
-        Article_Type = #{record.articleType,jdbcType=VARCHAR},
+      <if test="record.articleresourceid != null" >
+        ArticleResourceID = #{record.articleresourceid,jdbcType=INTEGER},
       </if>
-      <if test="record.articlePictureId != null" >
-        Article_Picture_ID = #{record.articlePictureId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.articleResourceId != null" >
-        Article_Resource_id = #{record.articleResourceId,jdbcType=INTEGER},
+      <if test="record.articlecontent != null" >
+        ArticleContent = #{record.articlecontent,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update article
+    set ArticleID = #{record.articleid,jdbcType=INTEGER},
+      ArticleFileName = #{record.articlefilename,jdbcType=VARCHAR},
+      ArticleData = #{record.articledata,jdbcType=VARCHAR},
+      ArticleTitle = #{record.articletitle,jdbcType=VARCHAR},
+      ArticleCategcry = #{record.articlecategcry,jdbcType=INTEGER},
+      ArticleTypeID = #{record.articletypeid,jdbcType=INTEGER},
+      ArticleResourceID = #{record.articleresourceid,jdbcType=INTEGER},
+      ArticleContent = #{record.articlecontent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
   <update id="updateByExample" parameterType="map" >
     update article
-    set Article_ID = #{record.articleId,jdbcType=INTEGER},
-      Article_FileName = #{record.articleFilename,jdbcType=VARCHAR},
-      Article_Path = #{record.articlePath,jdbcType=VARCHAR},
-      Article_Data = #{record.articleData,jdbcType=VARCHAR},
-      Article_Title = #{record.articleTitle,jdbcType=VARCHAR},
-      Article_Introduce = #{record.articleIntroduce,jdbcType=VARCHAR},
-      Article_Type = #{record.articleType,jdbcType=VARCHAR},
-      Article_Picture_ID = #{record.articlePictureId,jdbcType=VARCHAR},
-      Article_Resource_id = #{record.articleResourceId,jdbcType=INTEGER}
+    set ArticleID = #{record.articleid,jdbcType=INTEGER},
+      ArticleFileName = #{record.articlefilename,jdbcType=VARCHAR},
+      ArticleData = #{record.articledata,jdbcType=VARCHAR},
+      ArticleTitle = #{record.articletitle,jdbcType=VARCHAR},
+      ArticleCategcry = #{record.articlecategcry,jdbcType=INTEGER},
+      ArticleTypeID = #{record.articletypeid,jdbcType=INTEGER},
+      ArticleResourceID = #{record.articleresourceid,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -235,43 +259,49 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.lcyjtz.entity.Article" >
     update article
     <set >
-      <if test="articleFilename != null" >
-        Article_FileName = #{articleFilename,jdbcType=VARCHAR},
+      <if test="articlefilename != null" >
+        ArticleFileName = #{articlefilename,jdbcType=VARCHAR},
       </if>
-      <if test="articlePath != null" >
-        Article_Path = #{articlePath,jdbcType=VARCHAR},
+      <if test="articledata != null" >
+        ArticleData = #{articledata,jdbcType=VARCHAR},
       </if>
-      <if test="articleData != null" >
-        Article_Data = #{articleData,jdbcType=VARCHAR},
+      <if test="articletitle != null" >
+        ArticleTitle = #{articletitle,jdbcType=VARCHAR},
       </if>
-      <if test="articleTitle != null" >
-        Article_Title = #{articleTitle,jdbcType=VARCHAR},
+      <if test="articlecategcry != null" >
+        ArticleCategcry = #{articlecategcry,jdbcType=INTEGER},
       </if>
-      <if test="articleIntroduce != null" >
-        Article_Introduce = #{articleIntroduce,jdbcType=VARCHAR},
+      <if test="articletypeid != null" >
+        ArticleTypeID = #{articletypeid,jdbcType=INTEGER},
       </if>
-      <if test="articleType != null" >
-        Article_Type = #{articleType,jdbcType=VARCHAR},
+      <if test="articleresourceid != null" >
+        ArticleResourceID = #{articleresourceid,jdbcType=INTEGER},
       </if>
-      <if test="articlePictureId != null" >
-        Article_Picture_ID = #{articlePictureId,jdbcType=VARCHAR},
-      </if>
-      <if test="articleResourceId != null" >
-        Article_Resource_id = #{articleResourceId,jdbcType=INTEGER},
+      <if test="articlecontent != null" >
+        ArticleContent = #{articlecontent,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where Article_ID = #{articleId,jdbcType=INTEGER}
+    where ArticleID = #{articleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lcyjtz.entity.Article" >
+    update article
+    set ArticleFileName = #{articlefilename,jdbcType=VARCHAR},
+      ArticleData = #{articledata,jdbcType=VARCHAR},
+      ArticleTitle = #{articletitle,jdbcType=VARCHAR},
+      ArticleCategcry = #{articlecategcry,jdbcType=INTEGER},
+      ArticleTypeID = #{articletypeid,jdbcType=INTEGER},
+      ArticleResourceID = #{articleresourceid,jdbcType=INTEGER},
+      ArticleContent = #{articlecontent,jdbcType=LONGVARCHAR}
+    where ArticleID = #{articleid,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lcyjtz.entity.Article" >
     update article
-    set Article_FileName = #{articleFilename,jdbcType=VARCHAR},
-      Article_Path = #{articlePath,jdbcType=VARCHAR},
-      Article_Data = #{articleData,jdbcType=VARCHAR},
-      Article_Title = #{articleTitle,jdbcType=VARCHAR},
-      Article_Introduce = #{articleIntroduce,jdbcType=VARCHAR},
-      Article_Type = #{articleType,jdbcType=VARCHAR},
-      Article_Picture_ID = #{articlePictureId,jdbcType=VARCHAR},
-      Article_Resource_id = #{articleResourceId,jdbcType=INTEGER}
-    where Article_ID = #{articleId,jdbcType=INTEGER}
+    set ArticleFileName = #{articlefilename,jdbcType=VARCHAR},
+      ArticleData = #{articledata,jdbcType=VARCHAR},
+      ArticleTitle = #{articletitle,jdbcType=VARCHAR},
+      ArticleCategcry = #{articlecategcry,jdbcType=INTEGER},
+      ArticleTypeID = #{articletypeid,jdbcType=INTEGER},
+      ArticleResourceID = #{articleresourceid,jdbcType=INTEGER}
+    where ArticleID = #{articleid,jdbcType=INTEGER}
   </update>
 </mapper>

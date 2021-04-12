@@ -1,93 +1,83 @@
 package com.lcyjtz.entity;
 
 public class Article {
-    private Integer articleId;
+    private Integer articleid;
 
-    private String articleFilename;
+    private String articlefilename;
 
-    private String articlePath;
+    private String articledata;
 
-    private String articleData;
+    private String articletitle;
 
-    private String articleTitle;
+    private Integer articlecategcry;
 
-    private String articleIntroduce;
+    private Integer articletypeid;
 
-    private String articleType;
+    private Integer articleresourceid;
 
-    private String articlePictureId;
+    private String articlecontent;
 
-    private Integer articleResourceId;
-
-    public Integer getArticleId() {
-        return articleId;
+    public Integer getArticleid() {
+        return articleid;
     }
 
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
+    public void setArticleid(Integer articleid) {
+        this.articleid = articleid;
     }
 
-    public String getArticleFilename() {
-        return articleFilename;
+    public String getArticlefilename() {
+        return articlefilename;
     }
 
-    public void setArticleFilename(String articleFilename) {
-        this.articleFilename = articleFilename == null ? null : articleFilename.trim();
+    public void setArticlefilename(String articlefilename) {
+        this.articlefilename = articlefilename == null ? null : articlefilename.trim();
     }
 
-    public String getArticlePath() {
-        return articlePath;
+    public String getArticledata() {
+        return articledata;
     }
 
-    public void setArticlePath(String articlePath) {
-        this.articlePath = articlePath == null ? null : articlePath.trim();
+    public void setArticledata(String articledata) {
+        this.articledata = articledata == null ? null : articledata.trim();
     }
 
-    public String getArticleData() {
-        return articleData;
+    public String getArticletitle() {
+        return articletitle;
     }
 
-    public void setArticleData(String articleData) {
-        this.articleData = articleData == null ? null : articleData.trim();
+    public void setArticletitle(String articletitle) {
+        this.articletitle = articletitle == null ? null : articletitle.trim();
     }
 
-    public String getArticleTitle() {
-        return articleTitle;
+    public Integer getArticlecategcry() {
+        return articlecategcry;
     }
 
-    public void setArticleTitle(String articleTitle) {
-        this.articleTitle = articleTitle == null ? null : articleTitle.trim();
+    public void setArticlecategcry(Integer articlecategcry) {
+        this.articlecategcry = articlecategcry;
     }
 
-    public String getArticleIntroduce() {
-        return articleIntroduce;
+    public Integer getArticletypeid() {
+        return articletypeid;
     }
 
-    public void setArticleIntroduce(String articleIntroduce) {
-        this.articleIntroduce = articleIntroduce == null ? null : articleIntroduce.trim();
+    public void setArticletypeid(Integer articletypeid) {
+        this.articletypeid = articletypeid;
     }
 
-    public String getArticleType() {
-        return articleType;
+    public Integer getArticleresourceid() {
+        return articleresourceid;
     }
 
-    public void setArticleType(String articleType) {
-        this.articleType = articleType == null ? null : articleType.trim();
+    public void setArticleresourceid(Integer articleresourceid) {
+        this.articleresourceid = articleresourceid;
     }
 
-    public String getArticlePictureId() {
-        return articlePictureId;
+    public String getArticlecontent() {
+        return articlecontent;
     }
 
-    public void setArticlePictureId(String articlePictureId) {
-        this.articlePictureId = articlePictureId == null ? null : articlePictureId.trim();
-    }
-
-    public Integer getArticleResourceId() {
-        return articleResourceId;
-    }
-
-    public void setArticleResourceId(Integer articleResourceId) {
-        this.articleResourceId = articleResourceId;
+    public void setArticlecontent(String articlecontent) {
+        this.articlecontent = articlecontent == null ? null : articlecontent.trim();
     }
 }

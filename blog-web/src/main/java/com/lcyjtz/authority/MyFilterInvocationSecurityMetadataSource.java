@@ -22,11 +22,11 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         AntPathMatcher matcher = new AntPathMatcher();
         //匹配路径
         boolean b1 = matcher.match("/**", uri);
-        boolean b2 = method.toUpperCase().equals("数据库查找的当前路径以及方法");
-      //  if (b1 && b2) {
-            return SecurityConfig.createList("admin","developer");
-     //   }
-       // return null;
+        // boolean b2 = method.toUpperCase().equals("数据库查找的当前路径以及方法");
+        //  if (b1 && b2) {
+        return SecurityConfig.createList("admin", "developer");
+        //   }
+        // return null;
     }
 
     @Override

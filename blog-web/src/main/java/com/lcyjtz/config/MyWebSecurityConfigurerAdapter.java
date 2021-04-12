@@ -5,12 +5,12 @@ import com.lcyjtz.auth.MyUsernamePasswordAuthenticationFilter;
 import com.lcyjtz.authority.MyAccessDecisionManager;
 import com.lcyjtz.authority.MyFilterInvocationSecurityMetadataSource;
 import com.lcyjtz.handler.auth.MyAccessDeniedHandler;
+import com.lcyjtz.handler.auth.MyAuthenticationEntryPoint;
 import com.lcyjtz.handler.auth.MyAuthenticationFailureHandler;
 import com.lcyjtz.handler.auth.MyAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -30,15 +30,17 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
     private MyAccessDecisionManager myAccessDecisionManager;
     private MyFilterInvocationSecurityMetadataSource myFilterInvocationSecurityMetadataSource;
     private MyAccessDeniedHandler myAccessDeniedHandler;
+    private MyAuthenticationEntryPoint myAuthenticationEntryPoint;
 
     @Autowired
-    public void setMyUserDetailsService(MyAccessDeniedHandler myAccessDeniedHandler, MyFilterInvocationSecurityMetadataSource myFilterInvocationSecurityMetadataSource, MyAccessDecisionManager myAccessDecisionManager, MyUserDetailsService myUserDetailsService, MyAuthenticationSuccessHandler myAuthenticationSuccessHandler, MyAuthenticationFailureHandler myAuthenticationFailureHandler) {
+    public void setMyUserDetailsService(MyAuthenticationEntryPoint myAuthenticationEntryPoint, MyAccessDeniedHandler myAccessDeniedHandler, MyFilterInvocationSecurityMetadataSource myFilterInvocationSecurityMetadataSource, MyAccessDecisionManager myAccessDecisionManager, MyUserDetailsService myUserDetailsService, MyAuthenticationSuccessHandler myAuthenticationSuccessHandler, MyAuthenticationFailureHandler myAuthenticationFailureHandler) {
         this.myUserDetailsService = myUserDetailsService;
         this.myAuthenticationSuccessHandler = myAuthenticationSuccessHandler;
         this.myAuthenticationFailureHandler = myAuthenticationFailureHandler;
         this.myAccessDecisionManager = myAccessDecisionManager;
         this.myFilterInvocationSecurityMetadataSource = myFilterInvocationSecurityMetadataSource;
         this.myAccessDeniedHandler = myAccessDeniedHandler;
+        this.myAuthenticationEntryPoint = myAuthenticationEntryPoint;
 
     }
 
@@ -56,7 +58,7 @@ public class MyWebSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter
             }
         });
         http.authorizeRequests().anyRequest().authenticated();
-        http.exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
+        http.exceptionHandling().accessDeniedHandler(myAccessDeniedHandler).authenticationEntryPoint(myAuthenticationEntryPoint);
     }
 
     @Bean

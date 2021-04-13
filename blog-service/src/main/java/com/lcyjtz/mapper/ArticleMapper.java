@@ -2,9 +2,13 @@ package com.lcyjtz.mapper;
 
 import com.lcyjtz.entity.Article;
 import com.lcyjtz.entity.ArticleExample;
+
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface ArticleMapper {
     int countByExample(ArticleExample example);
 
@@ -33,4 +37,6 @@ public interface ArticleMapper {
     int updateByPrimaryKeyWithBLOBs(Article record);
 
     int updateByPrimaryKey(Article record);
+
+    int saveOrUpdateConArticleTag(@Param("articleID")Integer articleID,@Param("tagIdList") List<Integer> tagIdList);
 }

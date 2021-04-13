@@ -3,7 +3,6 @@ package com.lcyjtz.controller;
 import com.lcyjtz.Result;
 import com.lcyjtz.ResultInfo;
 import com.lcyjtz.api.WEBService;
-import com.lcyjtz.entity.ArticleCategcry;
 import com.lcyjtz.entity.ArticleType;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +14,11 @@ import java.util.List;
 
 /**
  * @autHor LHYJTZ
- * @data 2021年04月12日 17:47
+ * @data 2021年04月13日 10:04
  */
 @RestController
-@RequestMapping("/category")
-public class CategoryController {
+@RequestMapping("/tag")
+public class TagController {
     private WEBService webService;
 
     @Autowired
@@ -27,16 +26,13 @@ public class CategoryController {
         this.webService = webService;
     }
 
-
-    @ApiOperation("获取分类列表")
-    @GetMapping("/getCategoryList")
-    public Result getCategory() {
-        List<ArticleCategcry> list = webService.list();
+    @ApiOperation("获取标签列表")
+    @GetMapping("/getTagList")
+    public Result getTagList() {
+        List<ArticleType> list = webService.TypeList();
         if (list.size() > 0) {
             return Result.success().codeAndMessage(ResultInfo.SUCCESS).data("data", list);
         }
         return Result.error().codeAndMessage(ResultInfo.NOT_FOUND);
     }
-
-
 }

@@ -1,12 +1,18 @@
-package com.lcyjtz.entity;
+package com.lcyjtz.vo;
 
-import com.lcyjtz.vo.ArticleAddVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
+import java.util.List;
+
+/**
+ * @autHor LHYJTZ
+ * @data 2021年04月13日 10:43
+ */
+
 @Data
-@AllArgsConstructor
-public class Article {
+public class ArticleAddVO implements Serializable {
     private Integer articleid;
 
     private String articlefilename;
@@ -25,6 +31,16 @@ public class Article {
 
     private String articlecontent;
 
+    private List<Integer> tagIdList;
+
+    public List<Integer> getTagIdList() {
+        return tagIdList;
+    }
+
+    public void setTagIdList(List<Integer> tagIdList) {
+        this.tagIdList = tagIdList;
+    }
+
     public Integer getArticleid() {
         return articleid;
     }
@@ -38,7 +54,7 @@ public class Article {
     }
 
     public void setArticlefilename(String articlefilename) {
-        this.articlefilename = articlefilename == null ? null : articlefilename.trim();
+        this.articlefilename = articlefilename;
     }
 
     public String getArticledata() {
@@ -46,7 +62,7 @@ public class Article {
     }
 
     public void setArticledata(String articledata) {
-        this.articledata = articledata == null ? null : articledata.trim();
+        this.articledata = articledata;
     }
 
     public String getArticletitle() {
@@ -54,7 +70,7 @@ public class Article {
     }
 
     public void setArticletitle(String articletitle) {
-        this.articletitle = articletitle == null ? null : articletitle.trim();
+        this.articletitle = articletitle;
     }
 
     public Integer getArticlecategcry() {
@@ -94,17 +110,7 @@ public class Article {
     }
 
     public void setArticlecontent(String articlecontent) {
-        this.articlecontent = articlecontent == null ? null : articlecontent.trim();
+        this.articlecontent = articlecontent;
     }
 
-    public Article(ArticleAddVO articleAddVO) {
-        this.articleid = articleAddVO.getArticleid();
-        this.articlefilename = articleAddVO.getArticlefilename();
-        this.articletitle = articleAddVO.getArticletitle();
-        this.articlecategcry = articleAddVO.getArticlecategcry();
-        this.articleresourceid = articleAddVO.getArticleresourceid();
-        this.istop = articleAddVO.getIstop();
-        this.isdraft = articleAddVO.getIsdraft();
-        this.articlecontent = articleAddVO.getArticlecontent();
-    }
 }

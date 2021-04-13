@@ -6,12 +6,14 @@ import com.lcyjtz.dto.RoleListDTO;
 import com.lcyjtz.dto.UserDTO;
 import com.lcyjtz.entity.*;
 import com.lcyjtz.mapper.*;
+import com.lcyjtz.vo.ArticleAddVO;
 import com.lcyjtz.vo.UserQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,6 +24,12 @@ public class WEBServiceImpl implements WEBService {
     private PowerMapper powerMapper;
     private ArticleCategcryMapper articleCategcryMapper;
     private ArticleTypeMapper articleTypeMapper;
+    private ArticleMapper articleMapper;
+
+    @Autowired(required = false)
+    public void setMapper(ArticleMapper articleMapper) {
+        this.articleMapper = articleMapper;
+    }
 
     @Autowired(required = false)
     public void setMapper(ArticleTypeMapper articleTypeMapper) {
@@ -95,6 +103,7 @@ public class WEBServiceImpl implements WEBService {
         return visitorMapper.insert(visitor);
     }
 
+
     @Override
     public List<ArticleCategcry> list() {
         return articleCategcryMapper.selectByExample(null);
@@ -103,6 +112,31 @@ public class WEBServiceImpl implements WEBService {
     @Override
     public List<ArticleType> TypeList() {
         return articleTypeMapper.selectByExample(null);
+    }
+
+    @Override
+    public int insertArticle(ArticleAddVO articleAddVO) {
+        Date data = new Date();
+        Integer id = articleAddVO.getArticleid();
+        Article article = new Article(articleAddVO);
+        article.setArticledata(data.toString());
+        boolean save;
+        if (null == id) {
+            save = articleMapper.insert(article) >= 1;
+        } else {
+            save = articleMapper.updateByPrimaryKey(article) >= 1;
+        }
+        if (!save) {
+            return -1;
+        }
+        List<Integer> tagIdList = articleAddVO.getTagIdList();
+        Integer articleID = article.getArticleid();
+        System.out.println(articleID);
+        int i = this.articleMapper.saveOrUpdateConArticleTag(articleID, tagIdList);
+        if (i < 0) {
+            return -1;
+        }
+        return i;
     }
 
     @Override

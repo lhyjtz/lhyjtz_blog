@@ -1,8 +1,13 @@
 package com.lcyjtz.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
+@AllArgsConstructor
 public class ArticleExample {
     protected String orderByClause;
 
@@ -434,66 +439,6 @@ public class ArticleExample {
             return (Criteria) this;
         }
 
-        public Criteria andArticletypeidIsNull() {
-            addCriterion("ArticleTypeID is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticletypeidIsNotNull() {
-            addCriterion("ArticleTypeID is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticletypeidEqualTo(Integer value) {
-            addCriterion("ArticleTypeID =", value, "articletypeid");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticletypeidNotEqualTo(Integer value) {
-            addCriterion("ArticleTypeID <>", value, "articletypeid");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticletypeidGreaterThan(Integer value) {
-            addCriterion("ArticleTypeID >", value, "articletypeid");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticletypeidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("ArticleTypeID >=", value, "articletypeid");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticletypeidLessThan(Integer value) {
-            addCriterion("ArticleTypeID <", value, "articletypeid");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticletypeidLessThanOrEqualTo(Integer value) {
-            addCriterion("ArticleTypeID <=", value, "articletypeid");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticletypeidIn(List<Integer> values) {
-            addCriterion("ArticleTypeID in", values, "articletypeid");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticletypeidNotIn(List<Integer> values) {
-            addCriterion("ArticleTypeID not in", values, "articletypeid");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticletypeidBetween(Integer value1, Integer value2) {
-            addCriterion("ArticleTypeID between", value1, value2, "articletypeid");
-            return (Criteria) this;
-        }
-
-        public Criteria andArticletypeidNotBetween(Integer value1, Integer value2) {
-            addCriterion("ArticleTypeID not between", value1, value2, "articletypeid");
-            return (Criteria) this;
-        }
-
         public Criteria andArticleresourceidIsNull() {
             addCriterion("ArticleResourceID is null");
             return (Criteria) this;
@@ -551,6 +496,126 @@ public class ArticleExample {
 
         public Criteria andArticleresourceidNotBetween(Integer value1, Integer value2) {
             addCriterion("ArticleResourceID not between", value1, value2, "articleresourceid");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopIsNull() {
+            addCriterion("IsTop is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopIsNotNull() {
+            addCriterion("IsTop is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopEqualTo(Boolean value) {
+            addCriterion("IsTop =", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopNotEqualTo(Boolean value) {
+            addCriterion("IsTop <>", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopGreaterThan(Boolean value) {
+            addCriterion("IsTop >", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("IsTop >=", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopLessThan(Boolean value) {
+            addCriterion("IsTop <", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopLessThanOrEqualTo(Boolean value) {
+            addCriterion("IsTop <=", value, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopIn(List<Boolean> values) {
+            addCriterion("IsTop in", values, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopNotIn(List<Boolean> values) {
+            addCriterion("IsTop not in", values, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopBetween(Boolean value1, Boolean value2) {
+            addCriterion("IsTop between", value1, value2, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIstopNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("IsTop not between", value1, value2, "istop");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftIsNull() {
+            addCriterion("IsDraft is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftIsNotNull() {
+            addCriterion("IsDraft is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftEqualTo(Boolean value) {
+            addCriterion("IsDraft =", value, "isdraft");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftNotEqualTo(Boolean value) {
+            addCriterion("IsDraft <>", value, "isdraft");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftGreaterThan(Boolean value) {
+            addCriterion("IsDraft >", value, "isdraft");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("IsDraft >=", value, "isdraft");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftLessThan(Boolean value) {
+            addCriterion("IsDraft <", value, "isdraft");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftLessThanOrEqualTo(Boolean value) {
+            addCriterion("IsDraft <=", value, "isdraft");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftIn(List<Boolean> values) {
+            addCriterion("IsDraft in", values, "isdraft");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftNotIn(List<Boolean> values) {
+            addCriterion("IsDraft not in", values, "isdraft");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftBetween(Boolean value1, Boolean value2) {
+            addCriterion("IsDraft between", value1, value2, "isdraft");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsdraftNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("IsDraft not between", value1, value2, "isdraft");
             return (Criteria) this;
         }
     }

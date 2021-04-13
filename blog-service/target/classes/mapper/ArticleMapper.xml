@@ -1,307 +1,347 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.lcyjtz.mapper.ArticleMapper" >
-  <resultMap id="BaseResultMap" type="com.lcyjtz.entity.Article" >
-    <id column="ArticleID" property="articleid" jdbcType="INTEGER" />
-    <result column="ArticleFileName" property="articlefilename" jdbcType="VARCHAR" />
-    <result column="ArticleData" property="articledata" jdbcType="VARCHAR" />
-    <result column="ArticleTitle" property="articletitle" jdbcType="VARCHAR" />
-    <result column="ArticleCategcry" property="articlecategcry" jdbcType="INTEGER" />
-    <result column="ArticleTypeID" property="articletypeid" jdbcType="INTEGER" />
-    <result column="ArticleResourceID" property="articleresourceid" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.lcyjtz.entity.Article" extends="BaseResultMap" >
-    <result column="ArticleContent" property="articlecontent" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+<mapper namespace="com.lcyjtz.mapper.ArticleMapper">
+    <resultMap id="BaseResultMap" type="com.lcyjtz.entity.Article">
+        <id column="ArticleID" property="articleid" jdbcType="INTEGER"/>
+        <result column="ArticleFileName" property="articlefilename" jdbcType="VARCHAR"/>
+        <result column="ArticleData" property="articledata" jdbcType="VARCHAR"/>
+        <result column="ArticleTitle" property="articletitle" jdbcType="VARCHAR"/>
+        <result column="ArticleCategcry" property="articlecategcry" jdbcType="INTEGER"/>
+        <result column="ArticleResourceID" property="articleresourceid" jdbcType="INTEGER"/>
+        <result column="IsTop" property="istop" jdbcType="BIT"/>
+        <result column="IsDraft" property="isdraft" jdbcType="BIT"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.lcyjtz.entity.Article" extends="BaseResultMap">
+        <result column="ArticleContent" property="articlecontent" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
             </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    ArticleID, ArticleFileName, ArticleData, ArticleTitle, ArticleCategcry, ArticleResourceID, 
+    IsTop, IsDraft
   </sql>
-  <sql id="Base_Column_List" >
-    ArticleID, ArticleFileName, ArticleData, ArticleTitle, ArticleCategcry, ArticleTypeID, 
-    ArticleResourceID
-  </sql>
-  <sql id="Blob_Column_List" >
+    <sql id="Blob_Column_List">
     ArticleContent
   </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.lcyjtz.entity.ArticleExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from article
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lcyjtz.entity.ArticleExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    from article
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from article
-    where ArticleID = #{articleid,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs"
+            parameterType="com.lcyjtz.entity.ArticleExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lcyjtz.entity.ArticleExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        'true' as QUERYID,
+        <include refid="Base_Column_List"/>
+        from article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from article
+        where ArticleID = #{articleid,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from article
     where ArticleID = #{articleid,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.lcyjtz.entity.ArticleExample" >
-    delete from article
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </delete>
-  <insert id="insert" parameterType="com.lcyjtz.entity.Article" >
+    <delete id="deleteByExample" parameterType="com.lcyjtz.entity.ArticleExample">
+        delete from article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.lcyjtz.entity.Article" useGeneratedKeys="true" keyProperty="articleid">
     insert into article (ArticleID, ArticleFileName, ArticleData, 
-      ArticleTitle, ArticleCategcry, ArticleTypeID, 
-      ArticleResourceID, ArticleContent)
+      ArticleTitle, ArticleCategcry, ArticleResourceID, 
+      IsTop, IsDraft, ArticleContent
+      )
     values (#{articleid,jdbcType=INTEGER}, #{articlefilename,jdbcType=VARCHAR}, #{articledata,jdbcType=VARCHAR}, 
-      #{articletitle,jdbcType=VARCHAR}, #{articlecategcry,jdbcType=INTEGER}, #{articletypeid,jdbcType=INTEGER}, 
-      #{articleresourceid,jdbcType=INTEGER}, #{articlecontent,jdbcType=LONGVARCHAR})
+      #{articletitle,jdbcType=VARCHAR}, #{articlecategcry,jdbcType=INTEGER}, #{articleresourceid,jdbcType=INTEGER}, 
+      #{istop,jdbcType=BIT}, #{isdraft,jdbcType=BIT}, #{articlecontent,jdbcType=LONGVARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.lcyjtz.entity.Article" >
-    insert into article
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="articleid != null" >
-        ArticleID,
-      </if>
-      <if test="articlefilename != null" >
-        ArticleFileName,
-      </if>
-      <if test="articledata != null" >
-        ArticleData,
-      </if>
-      <if test="articletitle != null" >
-        ArticleTitle,
-      </if>
-      <if test="articlecategcry != null" >
-        ArticleCategcry,
-      </if>
-      <if test="articletypeid != null" >
-        ArticleTypeID,
-      </if>
-      <if test="articleresourceid != null" >
-        ArticleResourceID,
-      </if>
-      <if test="articlecontent != null" >
-        ArticleContent,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="articleid != null" >
-        #{articleid,jdbcType=INTEGER},
-      </if>
-      <if test="articlefilename != null" >
-        #{articlefilename,jdbcType=VARCHAR},
-      </if>
-      <if test="articledata != null" >
-        #{articledata,jdbcType=VARCHAR},
-      </if>
-      <if test="articletitle != null" >
-        #{articletitle,jdbcType=VARCHAR},
-      </if>
-      <if test="articlecategcry != null" >
-        #{articlecategcry,jdbcType=INTEGER},
-      </if>
-      <if test="articletypeid != null" >
-        #{articletypeid,jdbcType=INTEGER},
-      </if>
-      <if test="articleresourceid != null" >
-        #{articleresourceid,jdbcType=INTEGER},
-      </if>
-      <if test="articlecontent != null" >
-        #{articlecontent,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.lcyjtz.entity.ArticleExample" resultType="java.lang.Integer" >
-    select count(*) from article
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update article
-    <set >
-      <if test="record.articleid != null" >
-        ArticleID = #{record.articleid,jdbcType=INTEGER},
-      </if>
-      <if test="record.articlefilename != null" >
+    <insert id="insertSelective" parameterType="com.lcyjtz.entity.Article" >
+        insert into article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="articleid != null">
+                ArticleID,
+            </if>
+            <if test="articlefilename != null">
+                ArticleFileName,
+            </if>
+            <if test="articledata != null">
+                ArticleData,
+            </if>
+            <if test="articletitle != null">
+                ArticleTitle,
+            </if>
+            <if test="articlecategcry != null">
+                ArticleCategcry,
+            </if>
+            <if test="articleresourceid != null">
+                ArticleResourceID,
+            </if>
+            <if test="istop != null">
+                IsTop,
+            </if>
+            <if test="isdraft != null">
+                IsDraft,
+            </if>
+            <if test="articlecontent != null">
+                ArticleContent,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="articleid != null">
+                #{articleid,jdbcType=INTEGER},
+            </if>
+            <if test="articlefilename != null">
+                #{articlefilename,jdbcType=VARCHAR},
+            </if>
+            <if test="articledata != null">
+                #{articledata,jdbcType=VARCHAR},
+            </if>
+            <if test="articletitle != null">
+                #{articletitle,jdbcType=VARCHAR},
+            </if>
+            <if test="articlecategcry != null">
+                #{articlecategcry,jdbcType=INTEGER},
+            </if>
+            <if test="articleresourceid != null">
+                #{articleresourceid,jdbcType=INTEGER},
+            </if>
+            <if test="istop != null">
+                #{istop,jdbcType=BIT},
+            </if>
+            <if test="isdraft != null">
+                #{isdraft,jdbcType=BIT},
+            </if>
+            <if test="articlecontent != null">
+                #{articlecontent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.lcyjtz.entity.ArticleExample" resultType="java.lang.Integer">
+        select count(*) from article
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+
+    <insert id="saveOrUpdateConArticleTag" useGeneratedKeys="true">
+        <selectKey keyProperty="count" resultType="int" order="BEFORE">
+            select count(*) from conArticleType where ArticleID=#{articleID}
+        </selectKey>
+        <if test="count>0">
+            <foreach collection="tagIdList" separator="," item="item">
+                update conArticleType a set a.TypeID=#{item} where a.ArticleID=#{articleID}
+            </foreach>
+        </if>
+        <if test="count==0">
+            insert conArticleType(ArticleID,TypeID)VALUES
+            <foreach collection="tagIdList" separator="," item="item">
+                (#{articleID},#{item})
+            </foreach>
+        </if>
+    </insert>
+
+    <update id="updateByExampleSelective" parameterType="map">
+        update article
+        <set>
+            <if test="record.articleid != null">
+                ArticleID = #{record.articleid,jdbcType=INTEGER},
+            </if>
+            <if test="record.articlefilename != null">
+                ArticleFileName = #{record.articlefilename,jdbcType=VARCHAR},
+            </if>
+            <if test="record.articledata != null">
+                ArticleData = #{record.articledata,jdbcType=VARCHAR},
+            </if>
+            <if test="record.articletitle != null">
+                ArticleTitle = #{record.articletitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.articlecategcry != null">
+                ArticleCategcry = #{record.articlecategcry,jdbcType=INTEGER},
+            </if>
+            <if test="record.articleresourceid != null">
+                ArticleResourceID = #{record.articleresourceid,jdbcType=INTEGER},
+            </if>
+            <if test="record.istop != null">
+                IsTop = #{record.istop,jdbcType=BIT},
+            </if>
+            <if test="record.isdraft != null">
+                IsDraft = #{record.isdraft,jdbcType=BIT},
+            </if>
+            <if test="record.articlecontent != null">
+                ArticleContent = #{record.articlecontent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExampleWithBLOBs" parameterType="map">
+        update article
+        set ArticleID = #{record.articleid,jdbcType=INTEGER},
         ArticleFileName = #{record.articlefilename,jdbcType=VARCHAR},
-      </if>
-      <if test="record.articledata != null" >
         ArticleData = #{record.articledata,jdbcType=VARCHAR},
-      </if>
-      <if test="record.articletitle != null" >
         ArticleTitle = #{record.articletitle,jdbcType=VARCHAR},
-      </if>
-      <if test="record.articlecategcry != null" >
         ArticleCategcry = #{record.articlecategcry,jdbcType=INTEGER},
-      </if>
-      <if test="record.articletypeid != null" >
-        ArticleTypeID = #{record.articletypeid,jdbcType=INTEGER},
-      </if>
-      <if test="record.articleresourceid != null" >
         ArticleResourceID = #{record.articleresourceid,jdbcType=INTEGER},
-      </if>
-      <if test="record.articlecontent != null" >
-        ArticleContent = #{record.articlecontent,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update article
-    set ArticleID = #{record.articleid,jdbcType=INTEGER},
-      ArticleFileName = #{record.articlefilename,jdbcType=VARCHAR},
-      ArticleData = #{record.articledata,jdbcType=VARCHAR},
-      ArticleTitle = #{record.articletitle,jdbcType=VARCHAR},
-      ArticleCategcry = #{record.articlecategcry,jdbcType=INTEGER},
-      ArticleTypeID = #{record.articletypeid,jdbcType=INTEGER},
-      ArticleResourceID = #{record.articleresourceid,jdbcType=INTEGER},
-      ArticleContent = #{record.articlecontent,jdbcType=LONGVARCHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update article
-    set ArticleID = #{record.articleid,jdbcType=INTEGER},
-      ArticleFileName = #{record.articlefilename,jdbcType=VARCHAR},
-      ArticleData = #{record.articledata,jdbcType=VARCHAR},
-      ArticleTitle = #{record.articletitle,jdbcType=VARCHAR},
-      ArticleCategcry = #{record.articlecategcry,jdbcType=INTEGER},
-      ArticleTypeID = #{record.articletypeid,jdbcType=INTEGER},
-      ArticleResourceID = #{record.articleresourceid,jdbcType=INTEGER}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.lcyjtz.entity.Article" >
-    update article
-    <set >
-      <if test="articlefilename != null" >
-        ArticleFileName = #{articlefilename,jdbcType=VARCHAR},
-      </if>
-      <if test="articledata != null" >
-        ArticleData = #{articledata,jdbcType=VARCHAR},
-      </if>
-      <if test="articletitle != null" >
-        ArticleTitle = #{articletitle,jdbcType=VARCHAR},
-      </if>
-      <if test="articlecategcry != null" >
-        ArticleCategcry = #{articlecategcry,jdbcType=INTEGER},
-      </if>
-      <if test="articletypeid != null" >
-        ArticleTypeID = #{articletypeid,jdbcType=INTEGER},
-      </if>
-      <if test="articleresourceid != null" >
-        ArticleResourceID = #{articleresourceid,jdbcType=INTEGER},
-      </if>
-      <if test="articlecontent != null" >
-        ArticleContent = #{articlecontent,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where ArticleID = #{articleid,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lcyjtz.entity.Article" >
+        IsTop = #{record.istop,jdbcType=BIT},
+        IsDraft = #{record.isdraft,jdbcType=BIT},
+        ArticleContent = #{record.articlecontent,jdbcType=LONGVARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update article
+        set ArticleID = #{record.articleid,jdbcType=INTEGER},
+        ArticleFileName = #{record.articlefilename,jdbcType=VARCHAR},
+        ArticleData = #{record.articledata,jdbcType=VARCHAR},
+        ArticleTitle = #{record.articletitle,jdbcType=VARCHAR},
+        ArticleCategcry = #{record.articlecategcry,jdbcType=INTEGER},
+        ArticleResourceID = #{record.articleresourceid,jdbcType=INTEGER},
+        IsTop = #{record.istop,jdbcType=BIT},
+        IsDraft = #{record.isdraft,jdbcType=BIT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.lcyjtz.entity.Article">
+        update article
+        <set>
+            <if test="articlefilename != null">
+                ArticleFileName = #{articlefilename,jdbcType=VARCHAR},
+            </if>
+            <if test="articledata != null">
+                ArticleData = #{articledata,jdbcType=VARCHAR},
+            </if>
+            <if test="articletitle != null">
+                ArticleTitle = #{articletitle,jdbcType=VARCHAR},
+            </if>
+            <if test="articlecategcry != null">
+                ArticleCategcry = #{articlecategcry,jdbcType=INTEGER},
+            </if>
+            <if test="articleresourceid != null">
+                ArticleResourceID = #{articleresourceid,jdbcType=INTEGER},
+            </if>
+            <if test="istop != null">
+                IsTop = #{istop,jdbcType=BIT},
+            </if>
+            <if test="isdraft != null">
+                IsDraft = #{isdraft,jdbcType=BIT},
+            </if>
+            <if test="articlecontent != null">
+                ArticleContent = #{articlecontent,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where ArticleID = #{articleid,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.lcyjtz.entity.Article">
     update article
     set ArticleFileName = #{articlefilename,jdbcType=VARCHAR},
       ArticleData = #{articledata,jdbcType=VARCHAR},
       ArticleTitle = #{articletitle,jdbcType=VARCHAR},
       ArticleCategcry = #{articlecategcry,jdbcType=INTEGER},
-      ArticleTypeID = #{articletypeid,jdbcType=INTEGER},
       ArticleResourceID = #{articleresourceid,jdbcType=INTEGER},
+      IsTop = #{istop,jdbcType=BIT},
+      IsDraft = #{isdraft,jdbcType=BIT},
       ArticleContent = #{articlecontent,jdbcType=LONGVARCHAR}
     where ArticleID = #{articleid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.lcyjtz.entity.Article" >
+    <update id="updateByPrimaryKey" parameterType="com.lcyjtz.entity.Article">
     update article
     set ArticleFileName = #{articlefilename,jdbcType=VARCHAR},
       ArticleData = #{articledata,jdbcType=VARCHAR},
       ArticleTitle = #{articletitle,jdbcType=VARCHAR},
       ArticleCategcry = #{articlecategcry,jdbcType=INTEGER},
-      ArticleTypeID = #{articletypeid,jdbcType=INTEGER},
-      ArticleResourceID = #{articleresourceid,jdbcType=INTEGER}
+      ArticleResourceID = #{articleresourceid,jdbcType=INTEGER},
+      IsTop = #{istop,jdbcType=BIT},
+      IsDraft = #{isdraft,jdbcType=BIT}
     where ArticleID = #{articleid,jdbcType=INTEGER}
   </update>
 </mapper>

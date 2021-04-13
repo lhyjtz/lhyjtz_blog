@@ -2,6 +2,7 @@ package com.lcyjtz.Service;
 
 import com.lcyjtz.api.WEBService;
 
+import com.lcyjtz.dto.ArticleListDTO;
 import com.lcyjtz.dto.RoleListDTO;
 import com.lcyjtz.dto.UserDTO;
 import com.lcyjtz.entity.*;
@@ -103,7 +104,6 @@ public class WEBServiceImpl implements WEBService {
         return visitorMapper.insert(visitor);
     }
 
-
     @Override
     public List<ArticleCategcry> list() {
         return articleCategcryMapper.selectByExample(null);
@@ -131,12 +131,22 @@ public class WEBServiceImpl implements WEBService {
         }
         List<Integer> tagIdList = articleAddVO.getTagIdList();
         Integer articleID = article.getArticleid();
-        System.out.println(articleID);
         int i = this.articleMapper.saveOrUpdateConArticleTag(articleID, tagIdList);
         if (i < 0) {
             return -1;
         }
         return i;
+    }
+
+    @Override
+    public List<ArticleListDTO> listArticlePage(Integer current, Integer size, String articleTitle) {
+        current = (current - 1) * size;
+        List<ArticleListDTO> articleListDTOS = articleMapper.ArticleListPage(current, size, articleTitle);
+        System.out.println(articleListDTOS);
+        if (articleListDTOS.size() <= 0) {
+            return null;
+        }
+        return articleListDTOS;
     }
 
     @Override

@@ -142,7 +142,7 @@
       #{istop,jdbcType=BIT}, #{isdraft,jdbcType=BIT}, #{articlecontent,jdbcType=LONGVARCHAR}
       )
   </insert>
-    <insert id="insertSelective" parameterType="com.lcyjtz.entity.Article" >
+    <insert id="insertSelective" parameterType="com.lcyjtz.entity.Article">
         insert into article
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="articleid != null">
@@ -227,6 +227,20 @@
         </if>
     </insert>
 
+    <select id="ArticleListPage" resultType="com.lcyjtz.dto.ArticleListDTO">
+        select a.ArticleID as articleid,
+        a.ArticleTitle as articletitle,
+        a.ArticleCategcry as category ,
+        a.ArticleData as articledata,
+        a.IsTop as tags,
+        b.TypeName as istop
+        from article a, articletype b, articlecategcry c, conArticleType d
+        where a.ArticleID=d.ArticleID and b.ID=d.TypeID and a.ArticleCategcry=c.ID
+        <if test="articleTitle!=null || articleTitle!=''">
+            and a.ArticleTitle LIKE concat(cancat('%',#{articleTitle},'%'))
+        </if>
+        LIMIT #{current},#{size}
+    </select>
     <update id="updateByExampleSelective" parameterType="map">
         update article
         <set>

@@ -1,5 +1,6 @@
 package com.lcyjtz.mapper;
 
+import com.lcyjtz.dto.ArticleListDTO;
 import com.lcyjtz.entity.Article;
 import com.lcyjtz.entity.ArticleExample;
 
@@ -39,4 +40,6 @@ public interface ArticleMapper {
     int updateByPrimaryKey(Article record);
 
     int saveOrUpdateConArticleTag(@Param("articleID")Integer articleID,@Param("tagIdList") List<Integer> tagIdList);
+
+    List<ArticleListDTO> ArticleListPage(@Param("current")Integer current, @Param("size")Integer size, @Param("articleTitle")String articleTitle);
 }

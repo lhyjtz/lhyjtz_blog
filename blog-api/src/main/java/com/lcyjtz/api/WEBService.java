@@ -1,5 +1,6 @@
 package com.lcyjtz.api;
 
+import com.lcyjtz.dto.ArticleListDTO;
 import com.lcyjtz.dto.RoleListDTO;
 import com.lcyjtz.dto.UserDTO;
 import com.lcyjtz.entity.ArticleCategcry;
@@ -42,5 +43,8 @@ public interface WEBService {
 
     //添加文章
     int insertArticle(ArticleAddVO articleAddVO);
+
+    //文章列表
+    List<ArticleListDTO>listArticlePage(Integer current, Integer size, String articleTitle);
 
 }

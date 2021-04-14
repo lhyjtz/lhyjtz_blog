@@ -33,7 +33,6 @@ public class Visitor {
 
     private Boolean logindelete;
 
-
     public Integer getVisitorid() {
         return visitorid;
     }
@@ -130,7 +129,7 @@ public class Visitor {
         this.logindelete = logindelete;
     }
 
-    public Visitor(UserUpdateDTO userUpdateDTO) {
+   /* public Visitor(UserUpdateDTO userUpdateDTO) {
         this.visitorid = userUpdateDTO.getVisitorid();
         this.avatar = userUpdateDTO.getAvatar();
         this.visitorname = userUpdateDTO.getVisitorname();
@@ -139,4 +138,5 @@ public class Visitor {
         this.createtime = userUpdateDTO.getCreatetime();
         this.updatetime = userUpdateDTO.getUpdatetime();
     }
+*/
 }

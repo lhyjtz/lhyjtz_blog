@@ -232,12 +232,12 @@
         a.ArticleTitle as articletitle,
         a.ArticleCategcry as category ,
         a.ArticleData as articledata,
-        a.IsTop as tags,
-        b.TypeName as istop
+        a.IsTop as istop,
+        b.TypeName as tags
         from article a, articletype b, articlecategcry c, conArticleType d
         where a.ArticleID=d.ArticleID and b.ID=d.TypeID and a.ArticleCategcry=c.ID
         <if test="articleTitle!=null || articleTitle!=''">
-            and a.ArticleTitle LIKE concat(cancat('%',#{articleTitle},'%'))
+            and a.ArticleTitle LIKE concat('%',#{articleTitle},'%')
         </if>
         LIMIT #{current},#{size}
     </select>

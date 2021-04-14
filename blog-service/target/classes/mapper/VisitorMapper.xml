@@ -354,4 +354,18 @@
       LoginDelete = #{logindelete,jdbcType=BIT}
     where VisitorID = #{visitorid,jdbcType=INTEGER}
   </update>
+
+    <update id="UpdateStateByUseID" parameterType="com.lcyjtz.entity.Visitor">
+        update  visitor set  IsSilence = #{i,jdbcType=BIT} where VisitorID = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="UserListPage" resultType="com.lcyjtz.dto.UserListDTO">
+        SELECT  a.avatar as avatar, a.VisitorName as visitorname , a.Email as email , b.powertype as powertype
+        FROM visitor a, power b, rolepower c
+        WHERE a.VisitorRoleID=c.RoleID AND b.powerid= c.powerID
+       <if test="visitorname!=null || visitorname!=''">
+            and a.visitorname LIKE concat('%',#{visitorname},'%')
+       </if>
+        LIMIT #{current},#{size}
+    </select>
 </mapper>

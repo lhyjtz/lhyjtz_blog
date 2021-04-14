@@ -17,9 +17,7 @@ public class UserUpdateDTO {
     private Boolean issilence;
     private String powertype;
     private String userAuth;
-
     private Date createtime;
-
     private Date updatetime;
 
     public String getAvatar() {

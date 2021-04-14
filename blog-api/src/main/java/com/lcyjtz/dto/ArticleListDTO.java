@@ -14,7 +14,9 @@ import java.util.List;
  */
 @Data
 public class ArticleListDTO implements Serializable {
+
     private static final long serialVersionUID = 1L;
+
     private Integer articleid;
 
     private String articletitle;
@@ -25,6 +27,6 @@ public class ArticleListDTO implements Serializable {
 
     private String articledata;
 
-    private boolean istop;
+    private Boolean istop;
 
 }

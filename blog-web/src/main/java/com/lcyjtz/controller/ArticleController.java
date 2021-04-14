@@ -43,6 +43,8 @@ public class ArticleController {
                               @RequestParam(value = "size", defaultValue = "5", required = true) Integer size,
                               @RequestParam(value = "articleTitle", required = false) String articleTitle) {
         List<ArticleListDTO> articleListDTOS = webService.listArticlePage(current, size, articleTitle);
+        System.out.println(current + size + articleTitle);
+        System.out.println(articleListDTOS);
         return Result.success().codeAndMessage(ResultInfo.SUCCESS).data("data", articleListDTOS);
     }
 

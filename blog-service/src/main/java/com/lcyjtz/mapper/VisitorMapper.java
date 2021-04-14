@@ -1,7 +1,9 @@
 package com.lcyjtz.mapper;
 
+import com.lcyjtz.dto.ArticleListDTO;
 import com.lcyjtz.dto.RoleListDTO;
 import com.lcyjtz.dto.UserDTO;
+import com.lcyjtz.dto.UserListDTO;
 import com.lcyjtz.entity.Visitor;
 import com.lcyjtz.entity.VisitorExample;
 
@@ -33,7 +35,7 @@ public interface VisitorMapper {
 
     List<Visitor> selectByExample(VisitorExample example);
 
-    int UpdateStateByUseID(@Param("id")Integer id, @Param("i")Integer i);
+    int UpdateStateByUseID(@Param("id") Integer id, @Param("i") Integer i);
 
     Visitor selectByPrimaryKey(Integer visitorid);
 
@@ -44,4 +46,7 @@ public interface VisitorMapper {
     int updateByPrimaryKeySelective(Visitor record);
 
     int updateByPrimaryKey(Visitor record);
+
+    List<UserListDTO> UserListPage(@Param("current") Integer current, @Param("size") Integer size, @Param("visitorname") String visitorname);
+
 }

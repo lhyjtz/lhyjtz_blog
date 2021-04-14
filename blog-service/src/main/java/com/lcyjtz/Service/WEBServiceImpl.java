@@ -1,23 +1,18 @@
 package com.lcyjtz.Service;
 
 import com.lcyjtz.api.WEBService;
-
-import com.lcyjtz.dto.ArticleListDTO;
-import com.lcyjtz.dto.RoleListDTO;
-import com.lcyjtz.dto.UserDTO;
-import com.lcyjtz.dto.UserUpdateDTO;
+import com.lcyjtz.dto.*;
 import com.lcyjtz.entity.*;
 import com.lcyjtz.mapper.*;
 import com.lcyjtz.vo.ArticleAddVO;
 import com.lcyjtz.vo.UserQueryVO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class WEBServiceImpl implements WEBService {
@@ -108,6 +103,17 @@ public class WEBServiceImpl implements WEBService {
     }
 
     @Override
+    public List<UserListDTO> ListUserRole(Integer current, Integer size, String visitorname) {
+        current = (current - 1) * size;
+        List<UserListDTO> userListDTOS = visitorMapper.UserListPage(current, size, visitorname);
+        System.out.println(userListDTOS);
+        if (userListDTOS.size() <= 0) {
+            return null;
+        }
+        return userListDTOS;
+    }
+
+    @Override
     public List<ArticleCategcry> list() {
         return articleCategcryMapper.selectByExample(null);
     }
@@ -117,15 +123,24 @@ public class WEBServiceImpl implements WEBService {
         return articleTypeMapper.selectByExample(null);
     }
 
-    @Override
-    public int UpdateByUseID(UserUpdateDTO userUpdateDTO) {
-        Visitor visitor = new Visitor(userUpdateDTO);
-        String powerType = userUpdateDTO.getUserAuth();
-        Integer RoleID = powerMapper.SelectRoleID(powerType);
-        visitor.setVisitorroleid(RoleID);
-        return visitorMapper.updateByPrimaryKeySelective(visitor);
-    }
-
+    /*
+      @Override
+      public int UpdateByUseID(UserUpdateDTO userUpdateDTO) {
+          Visitor visitor = new Visitor(userUpdateDTO);
+          String powerType = userUpdateDTO.getUserAuth();
+          Integer RoleID = powerMapper.SelectRoleID(powerType);
+          Date time = null;
+          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+          try {
+              time = dateFormat.parse(dateFormat.format(new Date()));
+          } catch (ParseException e) {
+              e.printStackTrace();
+          }
+          visitor.setVisitorroleid(RoleID);
+          visitor.setUpdatetime(time);
+          return visitorMapper.updateByPrimaryKeySelective(visitor);
+      }
+     */
     @Override
     public boolean UpdateStateByUseID(Integer id, boolean flag) {
         int i = 0;

@@ -1,9 +1,6 @@
 package com.lcyjtz.api;
 
-import com.lcyjtz.dto.ArticleListDTO;
-import com.lcyjtz.dto.RoleListDTO;
-import com.lcyjtz.dto.UserDTO;
-import com.lcyjtz.dto.UserUpdateDTO;
+import com.lcyjtz.dto.*;
 import com.lcyjtz.entity.ArticleCategcry;
 import com.lcyjtz.entity.ArticleType;
 import com.lcyjtz.entity.Menu;
@@ -40,13 +37,16 @@ public interface WEBService {
     int DeleteUser(Integer id);
 
     //修改用户
-    int UpdateByUseID(UserUpdateDTO userUpdateDTO);
+    // int UpdateByUseID(UserUpdateDTO userUpdateDTO);
 
     //修改用户状态
-    boolean UpdateStateByUseID(Integer id, boolean flag );
+    boolean UpdateStateByUseID(Integer id, boolean flag);
 
     //添加用户
     int insert(Visitor visitor);
+
+    //文章列表
+    List<UserListDTO> ListUserRole(Integer current, Integer size, String visitorname);
 
     //添加文章
     int insertArticle(ArticleAddVO articleAddVO);

@@ -31,10 +31,8 @@ public class ArticleController {
     public Result saveOrUpdateArticle(@RequestBody ArticleAddVO articleAddVO) {
         int i = webService.insertArticle(articleAddVO);
         if (i > 0) {
-            System.out.println("cs1");
             return Result.success().codeAndMessage(ResultInfo.SUCCESS);
         } else {
-            System.out.println("cs3");
             return Result.success().codeAndMessage(ResultInfo.GLOBAL_ERROR);
         }
     }
@@ -45,7 +43,7 @@ public class ArticleController {
                               @RequestParam(value = "size", defaultValue = "5", required = true) Integer size,
                               @RequestParam(value = "articleTitle", required = false) String articleTitle) {
         List<ArticleListDTO> articleListDTOS = webService.listArticlePage(current, size, articleTitle);
-        return Result.success().data("data", articleListDTOS);
+        return Result.success().codeAndMessage(ResultInfo.SUCCESS).data("data", articleListDTOS);
     }
 
     @ApiOperation("/文章删除")

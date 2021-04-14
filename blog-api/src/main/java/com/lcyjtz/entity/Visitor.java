@@ -1,5 +1,6 @@
 package com.lcyjtz.entity;
 
+import com.lcyjtz.dto.UserUpdateDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -31,6 +32,7 @@ public class Visitor {
     private Boolean issilence;
 
     private Boolean logindelete;
+
 
     public Integer getVisitorid() {
         return visitorid;
@@ -126,5 +128,15 @@ public class Visitor {
 
     public void setLogindelete(Boolean logindelete) {
         this.logindelete = logindelete;
+    }
+
+    public Visitor(UserUpdateDTO userUpdateDTO) {
+        this.visitorid = userUpdateDTO.getVisitorid();
+        this.avatar = userUpdateDTO.getAvatar();
+        this.visitorname = userUpdateDTO.getVisitorname();
+        this.email = userUpdateDTO.getEmail();
+        this.issilence = userUpdateDTO.getIssilence();
+        this.createtime = userUpdateDTO.getCreatetime();
+        this.updatetime = userUpdateDTO.getUpdatetime();
     }
 }

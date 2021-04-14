@@ -5,6 +5,7 @@ import com.lcyjtz.api.WEBService;
 import com.lcyjtz.dto.ArticleListDTO;
 import com.lcyjtz.dto.RoleListDTO;
 import com.lcyjtz.dto.UserDTO;
+import com.lcyjtz.dto.UserUpdateDTO;
 import com.lcyjtz.entity.*;
 import com.lcyjtz.mapper.*;
 import com.lcyjtz.vo.ArticleAddVO;
@@ -12,6 +13,7 @@ import com.lcyjtz.vo.UserQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -99,6 +101,7 @@ public class WEBServiceImpl implements WEBService {
         return visitorMapper.deleteByPrimaryKey(id);
     }
 
+
     @Override
     public int insert(Visitor visitor) {
         return visitorMapper.insert(visitor);
@@ -112,6 +115,27 @@ public class WEBServiceImpl implements WEBService {
     @Override
     public List<ArticleType> TypeList() {
         return articleTypeMapper.selectByExample(null);
+    }
+
+    @Override
+    public int UpdateByUseID(UserUpdateDTO userUpdateDTO) {
+        Visitor visitor = new Visitor(userUpdateDTO);
+        String powerType = userUpdateDTO.getUserAuth();
+        Integer RoleID = powerMapper.SelectRoleID(powerType);
+        visitor.setVisitorroleid(RoleID);
+        return visitorMapper.updateByPrimaryKeySelective(visitor);
+    }
+
+    @Override
+    public boolean UpdateStateByUseID(Integer id, boolean flag) {
+        int i = 0;
+        if (flag) {
+            i = 1;
+        }
+        if (visitorMapper.UpdateStateByUseID(id, i) > 0) {
+            return true;
+        }
+        return false;
     }
 
     @Override

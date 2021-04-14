@@ -33,6 +33,8 @@ public interface VisitorMapper {
 
     List<Visitor> selectByExample(VisitorExample example);
 
+    int UpdateStateByUseID(@Param("id")Integer id, @Param("i")Integer i);
+
     Visitor selectByPrimaryKey(Integer visitorid);
 
     int updateByExampleSelective(@Param("record") Visitor record, @Param("example") VisitorExample example);

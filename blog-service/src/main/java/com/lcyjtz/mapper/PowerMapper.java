@@ -21,6 +21,8 @@ public interface PowerMapper {
 
     int insertSelective(Power record);
 
+    int SelectRoleID(@Param("powerType")String powerType);
+
     List<Power> selectByExample(PowerExample example);
 
     List<RoleListDTO> getRoleList();

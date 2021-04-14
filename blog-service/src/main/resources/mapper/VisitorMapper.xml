@@ -354,4 +354,8 @@
       LoginDelete = #{logindelete,jdbcType=BIT}
     where VisitorID = #{visitorid,jdbcType=INTEGER}
   </update>
+
+    <update id="UpdateStateByUseID" parameterType="com.lcyjtz.entity.Visitor">
+        update  visitor set  IsSilence = #{i,jdbcType=BIT} where VisitorID = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

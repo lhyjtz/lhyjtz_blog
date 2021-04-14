@@ -92,6 +92,11 @@
     <select id="getRoleList" resultType="com.lcyjtz.dto.RoleListDTO">
        select a.powertype as roleName, count(a.powertype) as total FROM power a GROUP BY a.powerid
   </select>
+
+    <select id="SelectRoleID" parameterType="com.lcyjtz.entity.PowerExample" resultType="java.lang.Integer">
+        select RoleID from power a,  rolepower b where a.powertype=#{powerType,jdbcType=VARCHAR} and a.powerid= b.powerID
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from power
     where powerid = #{powerid,jdbcType=INTEGER}

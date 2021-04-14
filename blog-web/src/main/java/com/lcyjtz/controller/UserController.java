@@ -4,15 +4,13 @@ import com.lcyjtz.Result;
 import com.lcyjtz.ResultInfo;
 import com.lcyjtz.api.WEBService;
 import com.lcyjtz.dto.UserDTO;
+import com.lcyjtz.dto.UserUpdateDTO;
 import com.lcyjtz.entity.Visitor;
 import com.lcyjtz.vo.UserQueryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -38,7 +36,6 @@ public class UserController {
 
     @DeleteMapping("/deleteByUserId")
     public Result deleteUser(Integer id) {
-        System.out.println(id);
         if (webService.DeleteUser(id) > 0) {
             return Result.success().codeAndMessage(ResultInfo.SUCCESSFULLY_DELETE);
         }
@@ -51,6 +48,24 @@ public class UserController {
          * BUG前端返回时间为null
          **/
         if (webService.insert(visitor) > 0) {
+            return Result.success().codeAndMessage(ResultInfo.SUCCESS);
+        }
+        return Result.error().codeAndMessage(ResultInfo.GLOBAL_ERROR);
+    }
+
+    @PutMapping("/updateUserById")
+    public Result updateUserById(@RequestBody UserUpdateDTO userUpdateDTO) {
+        if (webService.UpdateByUseID(userUpdateDTO) > 0) {
+            return Result.success().codeAndMessage(ResultInfo.SUCCESS);
+        }
+        return Result.error().codeAndMessage(ResultInfo.GLOBAL_ERROR);
+    }
+
+    @PutMapping("/updateSilenceById")
+    public Result updateSilenceById(@RequestParam(value = "id", required = true) Integer id,
+                                    @RequestParam(value = "flag", required = true) boolean flag) {
+        System.out.println(id);System.out.println(flag);
+        if (webService.UpdateStateByUseID(id, flag)) {
             return Result.success().codeAndMessage(ResultInfo.SUCCESS);
         }
         return Result.error().codeAndMessage(ResultInfo.GLOBAL_ERROR);
